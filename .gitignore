@@ -1,0 +1,39 @@
+# Environment and local secrets
+.env
+.env.*
+!.env.example
+*.env.txt
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite3
+
+# User uploads, generated media, embeddings, and search indexes
+storage/
+uploads/
+private_uploads/
+results/
+indexes/
+private_embeddings/
+private_embeddings_backup/
+
+# Generated QR codes
+guest_qr.png
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

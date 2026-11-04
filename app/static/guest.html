@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event AI Photo Finder</title>
+    <link rel="stylesheet" href="/static/css/guest.css">
+</head>
+<body>
+    <main class="page">
+        <header class="brand">
+            <div class="brand-icon">✦</div>
+            <p class="eyebrow">EVENT AI PHOTO FINDER</p>
+            <h1>Find Your <span>Memories</span></h1>
+            <p class="subtitle">
+                Discover your event photographs using AI face matching.
+            </p>
+        </header>
+
+        <section class="panel" id="consent-panel">
+            <div class="step-number">01 — YOUR PRIVACY</div>
+            <h2>Welcome to the event gallery</h2>
+            <p>
+                Upload a clear selfie to find event photographs that may
+                contain your face. Your selfie is processed temporarily
+                for matching.
+            </p>
+
+            <label class="consent">
+                <input type="checkbox" id="consent">
+                <span>
+                    I understand and consent to temporary processing
+                    of my selfie for face matching.
+                </span>
+            </label>
+
+            <button id="continue-btn" disabled>Continue</button>
+        </section>
+
+        <section class="panel hidden" id="upload-panel">
+            <div class="step-number">02 — UPLOAD SELFIE</div>
+            <h2>Let's find your photos</h2>
+            <p>Choose a clear, front-facing selfie.</p>
+
+            <label class="upload-area" for="selfie">
+                <span class="upload-icon">＋</span>
+                <strong>Choose your selfie</strong>
+                <small>JPG, PNG or WEBP — maximum 50 MB</small>
+                <input type="file" id="selfie"
+                    accept="image/jpeg,image/png,image/webp" hidden>
+            </label>
+
+            <div id="preview-container" class="hidden">
+                <img id="preview" alt="Selfie preview">
+                <button class="secondary-btn" id="remove-btn">
+                    Remove photo
+                </button>
+            </div>
+
+            <button id="search-btn" disabled>Find My Photos</button>
+        </section>
+
+        <section class="panel hidden" id="loading-panel">
+            <div class="loader"></div>
+            <h2>Finding your memories...</h2>
+            <p>Comparing your selfie with event photographs.</p>
+        </section>
+
+        <section class="panel hidden" id="results-panel">
+            <div class="step-number">03 — YOUR RESULTS</div>
+            <h2>Your event matches</h2>
+            <p id="result-summary"></p>
+            <div id="results-list"></div>
+            <button class="secondary-btn" id="retry-btn">
+                Search with another selfie
+            </button>
+        </section>
+
+        <div id="message" class="message hidden" role="alert"></div>
+
+        <footer>
+            Powered by Event AI Photo Finder
+        </footer>
+    </main>
+
+    <script src="/static/js/guest.js"></script>
+</body>
+</html>
