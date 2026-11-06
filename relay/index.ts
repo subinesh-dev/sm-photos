@@ -6,6 +6,8 @@ const db = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SE
   auth: { persistSession: false, autoRefreshToken: false },
 });
 const bucket = "photo-finder-private";
+// The direct website opens this one event; other events still require a QR token.
+const publicEventId = "d3228167-5500-4a72-bda0-2f7249a938aa";
 const cors = { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Headers": "authorization, content-type, x-event-token, x-job-token, x-job-lease, apikey", "Access-Control-Allow-Methods": "GET, POST, OPTIONS", "Cache-Control": "no-store" };
 const json = (data: unknown, status = 200) => new Response(JSON.stringify(data), { status, headers: { ...cors, "Content-Type": "application/json" } });
 const hash = async (value: string) => Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value)))).map((b) => b.toString(16).padStart(2, "0")).join("");
@@ -88,7 +90,11 @@ Deno.serve(async (req) => {
     const auth = req.headers.get("authorization")?.replace(/^Bearer\s+/i, "") || "";
 
     if (path === "/guest/submit" && req.method === "POST") {
-      const event = await getEvent(req.headers.get("x-event-token") || "", "guest");
+      const eventToken = req.headers.get("x-event-token") || "";
+      const event = eventToken
+        ? await getEvent(eventToken, "guest")
+        : check(await db.from("photo_finder_events").select("id,name").eq("id", publicEventId).eq("active", true).maybeSingle());
+      if (!event) fail("Event unavailable", 404);
       const jobId = crypto.randomUUID(), jobSecret = token(), selfiePath = `selfies/${jobId}`;
       const reserved = await db.rpc("photo_finder_reserve_job", { p_event_id: event.id, p_job_id: jobId, p_guest_token_hash: await hash(jobSecret), p_selfie_path: selfiePath });
       if (reserved.error) throw reserved.error;

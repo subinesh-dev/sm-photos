@@ -4,20 +4,43 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#f8f7f2">
   <title>Find your event photos</title>
-  <style>
-    *{box-sizing:border-box}body{font-family:Arial,sans-serif;background:#f4f7f4;color:#25342d;margin:0}main{max-width:600px;margin:auto;padding:40px 20px}h1,h2{font-family:Georgia,serif}h1{font-size:2.5rem}p{line-height:1.6;color:#566a5e}.card{background:white;border:1px solid #e3ebe4;border-radius:18px;padding:24px;margin:18px 0}button,.download{background:#286b4a;color:white;border:0;border-radius:10px;padding:14px 20px;font-size:1rem;font-weight:bold;cursor:pointer}button:disabled{opacity:.5}input[type=file]{display:block;margin:18px 0;max-width:100%}.photo{width:100%;height:auto;border-radius:10px}.result{border-top:1px solid #e3ebe4;padding:20px 0}.result button{margin-top:10px}.message{color:#963a2b;white-space:pre-wrap}label{display:block;line-height:1.5;margin:18px 0}
-  </style>
+  <link rel="stylesheet" href="./style.css">
 </head>
-<body><main>
-  <p>EVENT PHOTO FINDER</p><h1>Find your memories</h1>
-  <section class="card" id="form-section">
-    <h2>Find your event photos</h2>
-    <p>Choose a clear photo with only your face. Your selfie and matching photos are temporarily processed online. Your results expire after 24 hours and are deleted afterward.</p>
-    <label><input id="consent" type="checkbox"> I consent to face matching for this event.</label>
-    <input id="selfie" type="file" accept="image/jpeg,image/png,image/webp">
-    <button id="search" disabled>Find my photos</button>
-  </section>
-  <section class="card" id="results" hidden><h2>Your photos</h2><p id="summary"></p><div id="photos"></div><button id="again">Search again</button></section>
-  <p id="message" class="message" role="status"></p>
-</main><script type="module" src="./main.js"></script></body></html>
+<body>
+  <header class="topbar"><a class="brand" href="./" aria-label="Event Photo Finder home"><span class="brand-mark" aria-hidden="true">✳</span><span>the photo finder<small>YOUR MOMENTS, FOUND</small></span></a><span class="top-label">EVENT GALLERY</span></header>
+  <main>
+    <section id="form-section" class="intro">
+      <div class="eyebrow"><span></span> MADE FOR YOUR MEMORIES</div>
+      <h1>Finding <br><em>Moments.</em></h1>
+      <p class="intro-copy">The best moments are the ones you're in. Find your photos from the event in just a few seconds.</p>
+      <div class="upload-card">
+        <div class="card-heading"><div><span class="step">01 / LET'S GET STARTED</span><h2>Find your photos</h2></div><span class="sparkle" aria-hidden="true">✳</span></div>
+        <p class="card-copy">Choose a clear photo with just your face, and we'll find your moments.</p>
+        <label class="upload" for="selfie"><span class="upload-icon" aria-hidden="true">↑</span><span><strong id="file-label">Choose a photo</strong><small>JPG, PNG or WEBP · up to 10 MB</small></span><span class="upload-arrow" aria-hidden="true">↗</span></label>
+        <input class="file-input" id="selfie" type="file" accept="image/jpeg,image/png,image/webp">
+        <label class="consent"><input id="consent" type="checkbox"><span>I consent to face matching for this event.</span></label>
+        <button id="search" class="primary" disabled>Find my photos <span aria-hidden="true">↗</span></button>
+        <p class="privacy"><span aria-hidden="true">◇</span> Your selfie and matches are processed temporarily. Results expire after 24 hours and are deleted afterward.</p>
+      </div>
+      <div class="bottom-note"><span>MADE FOR THE MOMENTS THAT MATTER</span><span>✳</span></div>
+    </section>
+    <section id="results" class="results" hidden>
+      <div class="eyebrow"><span></span> YOUR EVENT GALLERY</div>
+      <div class="results-head"><div><h1>Your <em>moments.</em></h1><p id="summary"></p></div><button id="again" class="text-button">New search ↗</button></div>
+      <div class="gallery-toolbar"><div><span class="gallery-title">Your photos</span><span id="gallery-count" class="gallery-count"></span></div><div class="view-controls" role="group" aria-label="Photo layout">
+        <button class="view-button active" data-view="large" aria-label="Large grid" aria-pressed="true" title="Large grid"><span class="icon-large" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>
+        <button class="view-button" data-view="compact" aria-label="Compact grid" aria-pressed="false" title="Compact grid"><span class="icon-compact" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></button>
+        <button class="view-button" data-view="list" aria-label="List view" aria-pressed="false" title="List view"><span class="icon-list" aria-hidden="true"><i></i><i></i><i></i></span></button>
+      </div></div>
+      <div id="photos" class="photos" data-view="large"></div>
+      <p id="empty" class="empty" hidden>No matching photos found yet. Try a clear photo of your face, or check back after more event photos are added.</p>
+      <p class="gallery-note">Your results are available for 24 hours.</p>
+    </section>
+    <p id="message" class="message" role="status" aria-live="polite"></p>
+  </main>
+  <dialog id="preview" class="preview"><div class="preview-bar"><span>YOUR PHOTO</span><button id="close-preview" aria-label="Close photo preview">✕</button></div><img id="preview-image" alt="Selected event photo"><div class="preview-footer"><span id="preview-name"></span><button id="preview-download" class="primary">Download photo ↓</button></div></dialog>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
